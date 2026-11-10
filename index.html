@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#102e35" />
+  <title>WORLD BOX — Tiny Worlds, Big Stories</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="game-shell">
+    <canvas id="world" aria-label="Interactive isometric world"></canvas>
+    <div class="vignette"></div>
+
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="World Box home">
+        <span class="brand-mark"><span></span><span></span><span></span></span>
+        <span class="brand-name">WORLD<span>BOX</span></span>
+        <span class="brand-divider"></span>
+        <span class="brand-caption">A LITTLE WORLD, YOURS TO SHAPE</span>
+      </a>
+      <div class="top-actions">
+        <div class="live-pill"><span class="live-dot"></span><span id="world-status">WORLD ALIVE</span></div>
+        <button class="icon-button" id="sound-btn" title="Toggle sound" aria-label="Toggle sound"><span id="sound-icon">♪</span></button>
+        <button class="icon-button" id="help-btn" title="How to play" aria-label="How to play">?</button>
+        <button class="new-world" id="new-world"><span>↻</span> NEW WORLD</button>
+      </div>
+    </header>
+
+    <aside class="tool-panel glass-panel">
+      <div class="panel-heading">
+        <div><div class="eyebrow">THE CREATOR'S KIT</div><h1>Shape your world</h1></div>
+        <span class="sparkle">✳</span>
+      </div>
+      <div class="category-tabs" id="category-tabs">
+        <button class="category-tab active" data-category="life"><span>♧</span> LIFE</button>
+        <button class="category-tab" data-category="land"><span>◈</span> LAND</button>
+        <button class="category-tab" data-category="chaos"><span>✦</span> CHAOS</button>
+      </div>
+      <div class="tool-grid" id="tool-grid"></div>
+      <div class="tool-detail" id="tool-detail">
+        <div class="detail-icon" id="detail-icon">🌱</div>
+        <div><strong id="detail-name">Wild meadow</strong><p id="detail-copy">Click or drag to grow a greener world.</p></div>
+      </div>
+      <div class="panel-foot"><span class="keycap">CLICK</span> to place <span class="foot-dot">·</span> <span class="keycap">DRAG</span> to paint</div>
+    </aside>
+
+    <aside class="world-panel glass-panel">
+      <div class="world-panel-head"><div><div class="eyebrow">YOUR LITTLE PLANET</div><h2 id="world-name">Mosslight Isle</h2></div><button id="rename-world" class="dots-button" title="Rename world">···</button></div>
+      <div class="world-meta"><span class="season-icon">☀</span><span id="season-label">EARLY SUMMER</span><span class="meta-separator">/</span><span id="day-label">DAY 01</span></div>
+      <div class="population-card">
+        <div class="population-top"><span>ISLANDERS</span><span class="growth" id="growth-label">↗ THRIVING</span></div>
+        <div class="population-number" id="population">08<span> / 40</span></div>
+        <div class="population-bar"><span id="population-fill"></span></div>
+        <div class="population-note"><span id="people-label">8 little lives</span><span id="species-label">1 species</span></div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat"><span class="stat-icon forest">♣</span><div><b id="tree-count">26</b><small>TREES</small></div></div>
+        <div class="stat"><span class="stat-icon home">⌂</span><div><b id="home-count">3</b><small>HOMES</small></div></div>
+        <div class="stat"><span class="stat-icon land-icon">▱</span><div><b id="land-count">68%</b><small>LAND</small></div></div>
+        <div class="stat"><span class="stat-icon heart">♡</span><div><b id="happiness">96%</b><small>HAPPINESS</small></div></div>
+      </div>
+      <div class="island-note"><span class="note-mark">✦</span><p id="world-note">A quiet island with a big future. Give life a place to begin.</p></div>
+      <div class="panel-rule"></div>
+      <div class="selected-head"><span>WORLD LOG</span><span class="log-live"><i></i> LIVE</span></div>
+      <div class="event-log" id="event-log"></div>
+    </aside>
+
+    <div class="left-bottom-controls">
+      <button class="round-control" id="center-btn" title="Center world">⌖</button>
+      <div class="zoom-control"><button id="zoom-out" title="Zoom out">−</button><span id="zoom-label">100%</span><button id="zoom-in" title="Zoom in">+</button></div>
+    </div>
+
+    <section class="timeline glass-panel" aria-label="Simulation controls">
+      <button class="play-button" id="play-btn" title="Pause simulation"><span id="play-icon">Ⅱ</span></button>
+      <div class="timeline-main"><div class="timeline-top"><span class="timeline-title">A WORLD IN MOTION</span><span class="timeline-hint" id="sim-speed-label">NORMAL SPEED</span></div><div class="timeline-track"><span class="timeline-progress" id="timeline-progress"></span><span class="timeline-marker"></span></div></div>
+      <div class="speed-controls" aria-label="Simulation speed"><button class="speed-button active" data-speed="1">1×</button><button class="speed-button" data-speed="2">2×</button><button class="speed-button" data-speed="4">4×</button></div>
+      <span class="timeline-divider"></span>
+      <button class="small-action" id="reset-btn" title="Restart the simulation"><span>↺</span> RESET</button>
+    </section>
+
+    <div class="interaction-hint"><span class="mouse-symbol">⌖</span> <span id="hint-text">Pick a tool and bring your island to life</span><span class="hint-key">SPACE TO PAN</span></div>
+    <div class="toast" id="toast"></div>
+
+    <div class="modal-backdrop" id="help-modal" hidden>
+      <section class="help-card glass-panel">
+        <button class="modal-close" id="close-help" aria-label="Close">×</button>
+        <div class="eyebrow">A WORLD IN YOUR HANDS</div><h2>Make something wonderful.</h2>
+        <p>Paint forests, raise mountains, or invite tiny islanders to make a home. Then watch your little world grow its own stories.</p>
+        <div class="help-steps"><div><span>01</span><b>Choose a tool</b><small>Life, land, or a little chaos.</small></div><div><span>02</span><b>Shape the island</b><small>Click or drag anywhere on the map.</small></div><div><span>03</span><b>Watch it grow</b><small>Pause or speed up time whenever you like.</small></div></div>
+        <div class="help-controls"><span>SCROLL <b>ZOOM</b></span><span>SPACE + DRAG <b>MOVE</b></span><span>RIGHT-DRAG <b>MOVE</b></span></div>
+        <button class="start-playing" id="start-playing">LET'S PLAY <span>→</span></button>
+      </section>
+    </div>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
